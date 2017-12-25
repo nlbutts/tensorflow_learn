@@ -1,7 +1,6 @@
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import log_loss
+from sklearn.preprocessing import StandardScaler
 import numpy as np
 
 mnist = input_data.read_data_sets("./data")
@@ -10,6 +9,11 @@ X_train = mnist.train.images
 X_test = mnist.test.images
 y_train = mnist.train.labels.astype("int")
 y_test = mnist.test.labels.astype("int")
+
+sc = StandardScaler()
+sc.fit(X_train)
+X_train=sc.transform(X_train)
+X_test=sc.transform(X_test)
 
 feature_columns = [tf.feature_column.numeric_column("x", shape=[X_train.shape[1]])]
 
